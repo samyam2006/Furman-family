@@ -13,14 +13,17 @@ built to the project PRD.
 - Styling in `assets/css/styles.css`; interactions in `assets/js/main.js`.
 
 ## Design
-- Strictly monochrome: near-black `#0B0B0B` / charcoal `#151515` grounds, warm
-  paper `#F5F4F0` text, cool gray secondary. A muted antique-gold (`#B69A62`) is
-  reserved as a *micro-accent only* (overline tick, active states, thin rules).
-- Editorial layout — bounded container, asymmetric grids, hairline rules,
-  letter-spaced overlines, large calm serif headlines. No stock legal iconography.
-- **Restrained motion**, all gated by `prefers-reduced-motion`:
-  line-by-line hero reveal, single fade/rise reveal pattern, transparent→solid
-  scroll header, hover states on links/cards, accessible FAQ accordion, mobile drawer.
+- **Black & white on a white ground** — white/warm-off-white backgrounds, near-black
+  text (`#14140f`), gray secondary. No color accents; strictly monochrome.
+- Typography: **Libre Baskerville** (classic serif — wordmark, headings) + **Source
+  Sans 3** (UI/body) for a traditional, credible law-firm feel.
+- **Traditional firm structure** (inspired by conventional family-law sites): a slim
+  top utility bar with the phone number and hours, a sticky white header with the
+  firm wordmark + horizontal nav + consultation button, a split hero (copy + photo
+  slot) over a trust strip, bordered practice-area cards, and a dark footer.
+- Wide container that fills the page; balanced two-column sections (no empty voids).
+- **Restrained motion**, all gated by `prefers-reduced-motion`: fade/rise reveals,
+  scroll-shadow header, card hover lift, accessible FAQ accordion, mobile drawer.
 
 ## Accessibility
 - Skip link, semantic landmarks, single `h1`, logical headings.
