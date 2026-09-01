@@ -268,7 +268,6 @@ def home_main():
           </div>
         </div>
       </div>
-      <a class="scroll-cue" href="#trust" aria-label="Scroll to content"><span class="bar" aria-hidden="true"></span> Scroll</a>
     </section>
 
     <!-- ===== TRUST BAND ===== -->
