@@ -1,9 +1,9 @@
 /* =========================================================================
-   Law Office of Angela Furman, LLC — interactions
+   Law Office of Angela Furman, LLC — interactions (multi-page)
    Vanilla JS, dependency-free, progressive enhancement.
-   NOTE: The contact form uses a clearly-labeled NON-PRODUCTION stub.
-   It does NOT transmit anything. Wire it to an approved secure backend
-   or form provider before launch (see the submit handler below).
+   NOTE: The contact form is a clearly-labeled NON-PRODUCTION stub — it
+   validates but transmits nothing. Wire it to an approved secure backend
+   before launch (see the submit handler).
    ========================================================================= */
 (function () {
   "use strict";
@@ -11,26 +11,31 @@
   var docEl = document.documentElement;
   docEl.classList.remove("no-js");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasIO = "IntersectionObserver" in window;
 
-  /* -------------------------------------------------- Scroll-aware header + call bar */
+  /* -------------------------------------------------- Scroll-aware header, call bar, back-to-top */
   var header = document.querySelector(".site-header");
   var callbar = document.querySelector("[data-callbar]");
+  var toTop = document.querySelector(".to-top");
   function onScroll() {
     var y = window.scrollY;
-    if (header) header.classList.toggle("is-scrolled", y > 24);
-    if (callbar) callbar.classList.toggle("show", y > 520);
+    if (header) header.classList.toggle("is-scrolled", y > 10);
+    if (callbar) callbar.classList.toggle("show", y > 560);
+    if (toTop) toTop.classList.toggle("show", y > 700);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+  if (toTop) toTop.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
 
-  /* -------------------------------------------------- Mobile drawer with focus handling */
+  /* -------------------------------------------------- Mobile drawer + focus handling */
   var burger = document.querySelector(".burger");
   var drawer = document.querySelector(".drawer");
   var drawerClose = document.querySelector(".drawer__close");
   var lastFocused = null;
-
-  function focusables(container) {
-    return [].slice.call(container.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+  function focusables(c) {
+    return [].slice.call(c.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])'))
       .filter(function (el) { return el.offsetParent !== null; });
   }
   function openMenu() {
@@ -64,11 +69,15 @@
     });
   }
 
-  /* -------------------------------------------------- Scroll reveal */
-  var revealEls = [].slice.call(document.querySelectorAll("[data-reveal]"));
-  var lineEls = [].slice.call(document.querySelectorAll(".reveal-lines"));
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    revealEls.concat(lineEls).forEach(function (el) { el.classList.add("in"); });
+  /* -------------------------------------------------- Hero headline lines (reveal on load) */
+  var lineEls = [].slice.call(document.querySelectorAll(".lines"));
+  if (reduceMotion) { lineEls.forEach(function (el) { el.classList.add("in"); }); }
+  else { requestAnimationFrame(function () { requestAnimationFrame(function () { lineEls.forEach(function (el) { el.classList.add("in"); }); }); }); }
+
+  /* -------------------------------------------------- Scroll reveal + staggered groups */
+  var revealEls = [].slice.call(document.querySelectorAll("[data-reveal], [data-stagger]"));
+  if (reduceMotion || !hasIO) {
+    revealEls.forEach(function (el) { el.classList.add("in"); });
   } else {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -76,26 +85,48 @@
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
     revealEls.forEach(function (el) { io.observe(el); });
-    lineEls.forEach(function (el) { io.observe(el); });
   }
 
-  /* -------------------------------------------------- Active section in nav */
-  var navLinks = [].slice.call(document.querySelectorAll(".nav__link[href^='#']"));
-  var sections = navLinks
-    .map(function (l) { return document.querySelector(l.getAttribute("href")); })
-    .filter(Boolean);
-  if (sections.length && "IntersectionObserver" in window) {
-    var sio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          navLinks.forEach(function (l) {
-            l.setAttribute("aria-current", l.getAttribute("href") === "#" + id ? "true" : "false");
-          });
-        }
+  /* -------------------------------------------------- Count-up stats */
+  var counters = [].slice.call(document.querySelectorAll("[data-count]"));
+  function countUp(el) {
+    var target = parseFloat(el.getAttribute("data-count"));
+    var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+    var dur = 1400, start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(dec);
+      if (p < 1) requestAnimationFrame(frame); else el.textContent = target.toFixed(dec);
+    }
+    requestAnimationFrame(frame);
+  }
+  if (counters.length) {
+    if (reduceMotion || !hasIO) {
+      counters.forEach(function (el) { el.textContent = parseFloat(el.getAttribute("data-count")).toFixed(parseInt(el.getAttribute("data-decimals") || "0", 10)); });
+    } else {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) { countUp(entry.target); cio.unobserve(entry.target); } });
+      }, { threshold: 0.6 });
+      counters.forEach(function (el) { cio.observe(el); });
+    }
+  }
+
+  /* -------------------------------------------------- Subtle hero image parallax */
+  var parallax = document.querySelector("[data-parallax]");
+  if (parallax && !reduceMotion) {
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var rect = parallax.getBoundingClientRect();
+        var offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -0.05;
+        parallax.style.transform = "translateY(" + offset.toFixed(1) + "px)";
+        ticking = false;
       });
-    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
-    sections.forEach(function (s) { sio.observe(s); });
+    }, { passive: true });
   }
 
   /* -------------------------------------------------- FAQ accordion (accessible) */
@@ -104,51 +135,40 @@
       var item = head.closest(".acc__item");
       var body = document.getElementById(head.getAttribute("aria-controls"));
       var isOpen = head.getAttribute("aria-expanded") === "true";
-
-      // close siblings in the same accordion
       var container = item.parentElement;
       [].slice.call(container.querySelectorAll(".acc__head[aria-expanded='true']")).forEach(function (h) {
-        if (h !== head) {
-          h.setAttribute("aria-expanded", "false");
-          var b = document.getElementById(h.getAttribute("aria-controls"));
-          if (b) b.style.height = "0px";
-        }
+        if (h !== head) { h.setAttribute("aria-expanded", "false"); var b = document.getElementById(h.getAttribute("aria-controls")); if (b) b.style.height = "0px"; }
       });
-
       if (isOpen) { head.setAttribute("aria-expanded", "false"); body.style.height = "0px"; }
       else { head.setAttribute("aria-expanded", "true"); body.style.height = body.scrollHeight + "px"; }
     });
   });
-  // keep open panel sized on resize
   var resizeT;
   window.addEventListener("resize", function () {
     clearTimeout(resizeT);
     resizeT = setTimeout(function () {
       [].slice.call(document.querySelectorAll(".acc__head[aria-expanded='true']")).forEach(function (h) {
-        var b = document.getElementById(h.getAttribute("aria-controls"));
-        if (b) b.style.height = b.scrollHeight + "px";
+        var b = document.getElementById(h.getAttribute("aria-controls")); if (b) b.style.height = b.scrollHeight + "px";
       });
     }, 120);
   });
 
-  /* -------------------------------------------------- Practice-area → form prefill */
-  [].slice.call(document.querySelectorAll(".parea__link[data-matter]")).forEach(function (link) {
-    link.addEventListener("click", function () {
-      var matter = link.getAttribute("data-matter");
-      var select = document.getElementById("matter");
-      if (select) {
-        [].slice.call(select.options).forEach(function (opt) {
-          if (opt.value === matter || opt.text === matter) select.value = opt.value;
-        });
-      }
-    });
-  });
+  /* -------------------------------------------------- Contact form: query-param prefill (from practice-area links) */
+  var matterSelect = document.getElementById("matter");
+  if (matterSelect) {
+    var params = new URLSearchParams(window.location.search);
+    var wanted = params.get("matter");
+    if (wanted) {
+      [].slice.call(matterSelect.options).forEach(function (opt) {
+        if (opt.value === wanted || opt.text === wanted) matterSelect.value = opt.value;
+      });
+    }
+  }
 
   /* -------------------------------------------------- Contact form validation + NON-PRODUCTION stub */
   var form = document.querySelector("[data-contact-form]");
   if (form) {
     var status = form.querySelector("[data-form-status]");
-
     function setError(id, msg) {
       var input = document.getElementById(id);
       var err = document.getElementById("err-" + id);
@@ -159,63 +179,37 @@
       return !msg;
     }
     var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ""; }
     function validate() {
       var ok = true;
-      var name = document.getElementById("name").value.trim();
-      var phone = document.getElementById("phone").value.trim();
-      var email = document.getElementById("email").value.trim();
-      var matter = document.getElementById("matter").value;
-      var message = document.getElementById("message").value.trim();
-
-      ok = setError("name", name ? "" : "Please enter your name.") && ok;
-      ok = setError("phone", phone ? "" : "Please enter a phone number.") && ok;
+      ok = setError("name", val("name") ? "" : "Please enter your name.") && ok;
+      ok = setError("phone", val("phone") ? "" : "Please enter a phone number.") && ok;
+      var email = val("email");
       ok = setError("email", !email ? "Please enter your email." : (emailRe.test(email) ? "" : "Please enter a valid email address.")) && ok;
-      ok = setError("matter", matter ? "" : "Please choose a practice area.") && ok;
-      ok = setError("message", message ? "" : "Please add a brief description.") && ok;
+      ok = setError("matter", val("matter") ? "" : "Please choose a practice area.") && ok;
+      ok = setError("message", val("message") ? "" : "Please add a brief description.") && ok;
       return ok;
     }
-
-    // live-clear an error once the field is corrected
     ["name", "phone", "email", "matter", "message"].forEach(function (id) {
       var el = document.getElementById(id);
-      if (el) el.addEventListener("input", function () {
-        if (el.closest(".field").classList.contains("invalid")) validate();
-      });
+      if (el) el.addEventListener("input", function () { if (el.closest(".field").classList.contains("invalid")) validate(); });
     });
-
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (status) { status.hidden = true; status.className = "form-status"; }
-
       if (!validate()) {
-        if (status) {
-          status.hidden = false;
-          status.className = "form-status error";
-          status.textContent = "Please correct the highlighted fields and try again.";
-        }
+        if (status) { status.hidden = false; status.className = "form-status error"; status.textContent = "Please correct the highlighted fields and try again."; }
         var firstInvalid = form.querySelector(".field.invalid input, .field.invalid select, .field.invalid textarea");
         if (firstInvalid) firstInvalid.focus();
         return;
       }
-
-      /* --------------------------------------------------------------------
-         NON-PRODUCTION STUB — no data is sent anywhere.
-         To go live, replace the block below with a call to an approved
-         secure endpoint / form provider, e.g.:
-
-           fetch("/api/consultation", { method: "POST", body: new FormData(form) })
-             .then(...)  // show success
-             .catch(...) // show failure with phone + email fallback
-
-         Do NOT log the "message" field to analytics, console, or any
-         third-party monitoring/session-replay tool.
-      -------------------------------------------------------------------- */
+      /* NON-PRODUCTION STUB — nothing is sent. Replace with a call to an approved
+         secure endpoint / form provider before launch. Never log the message field
+         to analytics, console, or session-replay tools. */
       if (status) {
         status.hidden = false;
         status.className = "form-status success";
         status.innerHTML = "Thanks — your details look complete. This demo form isn't connected to a secure inbox yet, so to reach the firm now please call <a class=\"link\" href=\"tel:+14106354910\">(410) 635-4910</a> or email <a class=\"link\" href=\"mailto:angela.furman@alfurmanlaw.com\">angela.furman@alfurmanlaw.com</a>.";
-        status.focus && status.focus();
       }
     });
   }

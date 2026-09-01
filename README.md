@@ -5,10 +5,14 @@ practice in Columbia, Maryland. Black-and-white editorial theme (dark-dominant),
 built to the project PRD.
 
 ## What it is
-- **One long-form landing page** (`index.html`) with anchor navigation:
-  `#practice-areas`, `#about`, `#process`, `#testimonials`, `#faq`, `#contact`.
+- A **multi-page** site — each header link opens its own page:
+  `index.html` (Home), `practice-areas.html`, `about.html`, `process.html`,
+  `testimonials.html`, `faq.html`, `contact.html`.
 - Dependency-free **HTML + CSS + JavaScript** — no build step, hosts on any static
   host (GitHub Pages, Netlify, Vercel, S3, …).
+- The pages are generated from a small script (`scratchpad/build.py` in the working
+  session) so the shared header/footer stay identical; edit the HTML directly from
+  here on, or re-run the generator if you prefer.
 - Typography: **Cormorant Garamond** (display serif) + **Inter** (UI sans), via Google Fonts.
 - Styling in `assets/css/styles.css`; interactions in `assets/js/main.js`.
 
@@ -22,8 +26,10 @@ built to the project PRD.
   firm wordmark + horizontal nav + consultation button, a split hero (copy + photo
   slot) over a trust strip, bordered practice-area cards, and a dark footer.
 - Wide container that fills the page; balanced two-column sections (no empty voids).
-- **Restrained motion**, all gated by `prefers-reduced-motion`: fade/rise reveals,
-  scroll-shadow header, card hover lift, accessible FAQ accordion, mobile drawer.
+- **Motion** (all gated by `prefers-reduced-motion`): page-load fade, hero headline
+  line reveal, subtle hero-image parallax, staggered section reveals, animated
+  count-up stats, a slow practice-area marquee, scroll-shadow header, card hover
+  lift, accessible FAQ accordion, mobile drawer, and a back-to-top button.
 
 ## Accessibility
 - Skip link, semantic landmarks, single `h1`, logical headings.
