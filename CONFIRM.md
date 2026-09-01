@@ -30,10 +30,13 @@ production domain.
 - [ ] Confirm initials + location are intentional and wording is unedited
       (no ratings or outcome claims were added)
 
-## Portrait
-- [ ] Provide a **real, licensed** professional portrait of Angela Furman, OR keep the
-      current intentional typographic (no-photo) composition. The source's stock image
-      was **not** used — do not present a stock model as Angela.
+## Portrait & imagery
+- [ ] Provide a **real, licensed** professional portrait of Angela Furman for the About
+      page (currently an intentional typographic slot). The source's stock image was
+      **not** used — do not present a stock model as Angela.
+- [ ] The home **hero background** (`assets/img/hero.svg`) is a self-made black-and-white
+      illustration standing in for a real photo. Swap it for a licensed B&W office/
+      architectural photograph when available (update the `.hero__bg` background URL).
 
 ## Contact form (make it real)
 - [ ] The form is a **clearly-labeled non-production stub** — it does not send anything.
