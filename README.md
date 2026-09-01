@@ -1,50 +1,51 @@
-# Furman Family Law — Website
+# Law Office of Angela Furman, LLC — Website
 
-A professional, multi-page marketing website for a family law practice.
-Black-and-white editorial theme with subtle, tasteful motion.
+A polished, responsive, **single-page** website for a boutique family law
+practice in Columbia, Maryland. Black-and-white editorial theme (dark-dominant),
+built to the project PRD.
 
-## Pages
-| File | Page |
-| --- | --- |
-| `index.html` | Home |
-| `about.html` | About the firm / attorney |
-| `practice-areas.html` | Practice areas + FAQ |
-| `approach.html` | How the firm works |
-| `contact.html` | Contact details + inquiry form |
-
-## Stack
-- Plain, dependency-free **HTML + CSS + JavaScript** — no build step, hosts anywhere
-  (GitHub Pages, Netlify, Vercel, S3, any static host).
-- Typography: **Fraunces** (display serif) + **Inter** (sans), loaded from Google Fonts.
-- All shared styling lives in `assets/css/styles.css`; interactions in `assets/js/main.js`.
+## What it is
+- **One long-form landing page** (`index.html`) with anchor navigation:
+  `#practice-areas`, `#about`, `#process`, `#testimonials`, `#faq`, `#contact`.
+- Dependency-free **HTML + CSS + JavaScript** — no build step, hosts on any static
+  host (GitHub Pages, Netlify, Vercel, S3, …).
+- Typography: **Cormorant Garamond** (display serif) + **Inter** (UI sans), via Google Fonts.
+- Styling in `assets/css/styles.css`; interactions in `assets/js/main.js`.
 
 ## Design
-- Strictly monochrome (near-black `#0b0b0c`, warm paper `#f4f2ee`, white) for a
-  refined, non-generic law-firm feel.
-- Editorial layout: asymmetric grids, section numbering, hairline rules,
-  letter-spaced labels, large serif headlines.
-- Subtle animation only (respects `prefers-reduced-motion`):
-  - line-by-line hero headline reveal
-  - scroll-reveal fade/rise on sections
-  - sticky/condensing header
-  - animated stat counters
-  - a slow monochrome marquee of practice areas
-  - hover states on links, buttons, cards, and the practice-area index
-  - expanding practice-area rows and FAQ accordion
-  - full-screen mobile menu
+- Strictly monochrome: near-black `#0B0B0B` / charcoal `#151515` grounds, warm
+  paper `#F5F4F0` text, cool gray secondary. A muted antique-gold (`#B69A62`) is
+  reserved as a *micro-accent only* (overline tick, active states, thin rules).
+- Editorial layout — bounded container, asymmetric grids, hairline rules,
+  letter-spaced overlines, large calm serif headlines. No stock legal iconography.
+- **Restrained motion**, all gated by `prefers-reduced-motion`:
+  line-by-line hero reveal, single fade/rise reveal pattern, transparent→solid
+  scroll header, hover states on links/cards, accessible FAQ accordion, mobile drawer.
+
+## Accessibility
+- Skip link, semantic landmarks, single `h1`, logical headings.
+- Keyboard-operable nav drawer (focus trap + return, `Esc` to close, `aria-expanded`/`aria-controls`).
+- FAQ buttons expose `aria-expanded`/`aria-controls`; content is in the DOM for SEO.
+- Labeled form controls, `autocomplete`, inline errors with `role="alert"`, and a
+  polite live-region status. Targets WCAG 2.2 AA.
+
+## Sections
+Header → Hero → Credibility strip → Practice Areas (7) → About → Process (3 steps)
+→ Testimonials (2) → FAQ (8) → Contact + form → Footer, plus a mobile-only "Call Now" bar.
 
 ## Running locally
-It's static — just open `index.html`, or serve the folder:
+Static — open `index.html`, or serve the folder:
 
 ```bash
 python3 -m http.server 8000
-# then visit http://localhost:8000
+# visit http://localhost:8000
 ```
 
-## Making it yours
-See **`CONTENT.md`** for the full checklist of copy, contact details, and
-photos to replace. Every editable spot is marked with an `<!-- EDIT -->`
-comment or bracketed `[placeholder]` text in the HTML.
+## Before launch
+The contact form is a **clearly-labeled non-production stub** and sends nothing —
+wire it to an approved secure backend or form provider. All copy is from the audited
+source and is **pending attorney approval**.
 
-The contact form currently shows a front-end confirmation only; wire it to your
-intake system or an email service to receive submissions.
+**See [`CONFIRM.md`](./CONFIRM.md)** for the full launch-blocker checklist (business
+facts, legal-content approval, testimonial authorization, real portrait, secure form,
+canonical URL, structured data).
