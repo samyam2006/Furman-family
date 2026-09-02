@@ -6,16 +6,26 @@
   <title>Contact | Law Office of Angela Furman, LLC</title>
   <meta name="description" content="Schedule a confidential family law consultation in Columbia, MD. Call (410) 635-4910, email, or send a message." />
   <meta name="theme-color" content="#ffffff" />
+  <!-- CONFIRM production domain (BASE_URL) before relying on canonical / og:url -->
+  <link rel="canonical" href="https://alfurmanlaw.com/contact.html" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Law Office of Angela Furman, LLC" />
   <meta property="og:title" content="Contact | Law Office of Angela Furman, LLC" />
   <meta property="og:description" content="Schedule a confidential family law consultation in Columbia, MD. Call (410) 635-4910, email, or send a message." />
+  <meta property="og:url" content="https://alfurmanlaw.com/contact.html" />
+  <meta property="og:image" content="https://alfurmanlaw.com/assets/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <!-- CONFIRM before launch: canonical + og:url + og:image once the production domain is verified -->
+  <meta name="twitter:title" content="Contact | Law Office of Angela Furman, LLC" />
+  <meta name="twitter:description" content="Schedule a confidential family law consultation in Columbia, MD. Call (410) 635-4910, email, or send a message." />
+  <meta name="twitter:image" content="https://alfurmanlaw.com/assets/img/og.png" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-weight='700' font-size='22' fill='%2314140f' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/fonts/source-sans-3-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/libre-baskerville-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LegalService","name":"Law Office of Angela Furman, LLC","description":"Boutique family law practice in Columbia, Maryland — divorce, custody, support, and family matters.","url":"https://alfurmanlaw.com/","image":"https://alfurmanlaw.com/assets/img/og.png","telephone":"+1-410-635-4910","email":"angela.furman@alfurmanlaw.com","areaServed":["Columbia, MD","Howard County, MD"],"address":{"@type":"PostalAddress","streetAddress":"8850 Columbia 100 Pkwy, Suite 303","addressLocality":"Columbia","addressRegion":"MD","postalCode":"21045","addressCountry":"US"}}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -75,10 +85,12 @@
 
   <main id="main">
 
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">Contact</div>
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero" aria-label="Page introduction">
+      <div class="page-hero__bg" aria-hidden="true"></div>
+      <div class="page-hero__scrim" aria-hidden="true"></div>
       <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</p>
+        <nav class="page-hero__crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Contact</nav>
         <h1 class="page-hero__title">Schedule a confidential consultation.</h1>
         <p class="lead measure">Reach out by phone, email, or the form. Angela personally reviews every inquiry and will respond within one business day.</p>
       </div>
@@ -95,7 +107,11 @@
             <p class="muted" style="margin-top:1.6rem; font-size:.9rem; max-width:40ch;">Prefer to talk it through? Call the office directly — Angela welcomes a confidential, no-obligation conversation.</p>
           </div>
           <div>
-            <form class="form-card" data-contact-form novalidate aria-describedby="form-disclaimer">
+            <!-- Ready for Netlify Forms out of the box (data-netlify + hidden form-name + honeypot).
+                 For Formspree/other providers, change action="/" to your endpoint URL. See CONFIRM.md. -->
+            <form class="form-card" data-contact-form action="/" method="POST" name="consultation" data-netlify="true" netlify-honeypot="bot-field" novalidate aria-describedby="form-disclaimer">
+              <input type="hidden" name="form-name" value="consultation" />
+              <p class="hp" hidden aria-hidden="true"><label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
               <div class="form-row">
                 <div class="field"><label for="name">Full Name <span class="req" aria-hidden="true">*</span></label><input id="name" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="err-name" placeholder="Jane Doe" /><span class="field__error" id="err-name" role="alert"></span></div>
                 <div class="field"><label for="phone">Phone <span class="req" aria-hidden="true">*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" required aria-required="true" aria-describedby="err-phone" placeholder="(410) 555-0100" /><span class="field__error" id="err-phone" role="alert"></span></div>

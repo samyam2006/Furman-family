@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
+import os, re, json
+import html as htmlmod
 
 OUT = "/home/user/Furman-family"
 
@@ -7,9 +8,23 @@ PHONE_TEL = "+14106354910"
 PHONE = "(410) 635-4910"
 EMAIL = "angela.furman@alfurmanlaw.com"
 
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
-         '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n'
-         '  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />')
+BASE_URL = "https://alfurmanlaw.com"  # CONFIRM production domain before launch
+
+FONTS = ('<link rel="preload" href="assets/fonts/source-sans-3-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin />\n'
+         '  <link rel="preload" href="assets/fonts/libre-baskerville-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin />\n'
+         '  <link rel="stylesheet" href="assets/fonts/fonts.css" />')
+
+# Site-wide structured data. CONFIRM business facts + domain before launch.
+SITE_JSONLD = ('<script type="application/ld+json">'
+    '{"@context":"https://schema.org","@type":"LegalService",'
+    '"name":"Law Office of Angela Furman, LLC",'
+    '"description":"Boutique family law practice in Columbia, Maryland — divorce, custody, support, and family matters.",'
+    f'"url":"{BASE_URL}/","image":"{BASE_URL}/assets/img/og.png",'
+    '"telephone":"+1-410-635-4910","email":"angela.furman@alfurmanlaw.com",'
+    '"areaServed":["Columbia, MD","Howard County, MD"],'
+    '"address":{"@type":"PostalAddress","streetAddress":"8850 Columbia 100 Pkwy, Suite 303",'
+    '"addressLocality":"Columbia","addressRegion":"MD","postalCode":"21045","addressCountry":"US"}}'
+    '</script>')
 
 FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
            "%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' "
@@ -25,7 +40,9 @@ NAV = [
     ("Contact", "contact.html"),
 ]
 
-def head(title, desc):
+def head(title, desc, slug="index.html", extra_head=""):
+    url = BASE_URL + "/" + ("" if slug == "index.html" else slug)
+    extra = ("\n  " + extra_head) if extra_head else ""
     return f'''<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -34,14 +51,24 @@ def head(title, desc):
   <title>{title}</title>
   <meta name="description" content="{desc}" />
   <meta name="theme-color" content="#ffffff" />
+  <!-- CONFIRM production domain (BASE_URL) before relying on canonical / og:url -->
+  <link rel="canonical" href="{url}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Law Office of Angela Furman, LLC" />
   <meta property="og:title" content="{title}" />
   <meta property="og:description" content="{desc}" />
+  <meta property="og:url" content="{url}" />
+  <meta property="og:image" content="{BASE_URL}/assets/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <!-- CONFIRM before launch: canonical + og:url + og:image once the production domain is verified -->
+  <meta name="twitter:title" content="{title}" />
+  <meta name="twitter:description" content="{desc}" />
+  <meta name="twitter:image" content="{BASE_URL}/assets/img/og.png" />
   {FAVICON}
   {FONTS}
   <link rel="stylesheet" href="assets/css/styles.css" />
+  {SITE_JSONLD}{extra}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>'''
@@ -161,9 +188,22 @@ def footer():
 </html>
 '''
 
-def page(active, title, desc, main_html, with_cta=True):
-    return (head(title, desc) + header(active) + '\n  <main id="main">\n'
+def page(active, title, desc, main_html, with_cta=True, extra_head=""):
+    return (head(title, desc, slug=active, extra_head=extra_head) + header(active) + '\n  <main id="main">\n'
             + main_html + ('\n' + cta_band() if with_cta else '') + '\n  </main>\n' + footer())
+
+def page_hero(crumb_label, title, lead):
+    return f'''
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero" aria-label="Page introduction">
+      <div class="page-hero__bg" aria-hidden="true"></div>
+      <div class="page-hero__scrim" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="page-hero__crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> {crumb_label}</nav>
+        <h1 class="page-hero__title">{title}</h1>
+        <p class="lead measure">{lead}</p>
+      </div>
+    </section>'''
 
 # Practice-area data
 AREAS = [
@@ -379,16 +419,8 @@ def practice_main():
           </div>
         </article>
 '''
-    return f'''
-    <!-- ===== PAGE HERO ===== -->
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">Practice</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Practice Areas</p>
-        <h1 class="page-hero__title">Family law, and only family law.</h1>
-        <p class="lead measure">Because we concentrate on a single field, we know it deeply — the statutes, the courts, the strategies, and the human realities behind each of these matters.</p>
-      </div>
-    </section>
+    return page_hero("Practice Areas", "Family law, and only family law.",
+        "Because we concentrate on a single field, we know it deeply — the statutes, the courts, the strategies, and the human realities behind each of these matters.") + f'''
 
     <section class="section--tight bg-paper">
       <div class="container">
@@ -397,15 +429,8 @@ def practice_main():
 
 # ---------------- ABOUT ----------------
 def about_main():
-    return f'''
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">About</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; About</p>
-        <h1 class="page-hero__title">Experience you can lean on.</h1>
-        <p class="lead measure">Furman Family Law was built on a simple conviction: that people navigating the most personal legal matters of their lives deserve an attorney who is genuinely present — prepared, honest, and invested in the outcome.</p>
-      </div>
-    </section>
+    return page_hero("About", "Experience you can lean on.",
+        "The Law Office of Angela Furman was built on a simple conviction: that people navigating the most personal legal matters of their lives deserve an attorney who is genuinely present — prepared, honest, and invested in the outcome.") + f'''
 
     <section class="section bg-paper" aria-labelledby="about-heading">
       <div class="container">
@@ -443,15 +468,8 @@ def about_main():
 
 # ---------------- PROCESS ----------------
 def process_main():
-    return f'''
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">Process</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Process</p>
-        <h1 class="page-hero__title">A clear path through an unclear time.</h1>
-        <p class="lead measure">You don't need more uncertainty right now. Our process is designed to give you footing fast — a clear understanding of where you stand, what your options are, and exactly what happens next.</p>
-      </div>
-    </section>
+    return page_hero("Process", "A clear path through an unclear time.",
+        "You don't need more uncertainty right now. Our process is designed to give you footing fast — a clear understanding of where you stand, what your options are, and exactly what happens next.") + f'''
 
     <section class="section bg-paper" aria-labelledby="steps-h">
       <div class="container">
@@ -483,15 +501,8 @@ def process_main():
 
 # ---------------- TESTIMONIALS ----------------
 def testimonials_main():
-    return f'''
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">Clients</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Testimonials</p>
-        <h1 class="page-hero__title">In the words of the people we've represented.</h1>
-        <p class="lead measure">The measure of a family law practice is how its clients felt during the hardest moments — and whether they'd send the people they love.</p>
-      </div>
-    </section>
+    return page_hero("Testimonials", "In the words of the people we've represented.",
+        "The measure of a family law practice is how its clients felt during the hardest moments — and whether they'd send the people they love.") + f'''
 
     <!-- CONFIRM before launch: written authorization for each testimonial; wording/initials/location approved. -->
     <section class="section bg-paper">
@@ -506,15 +517,8 @@ def testimonials_main():
 
 # ---------------- FAQ ----------------
 def faq_main():
-    return f'''
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">FAQ</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; FAQ</p>
-        <h1 class="page-hero__title">Answers, in plain language.</h1>
-        <p class="lead measure">The questions clients ask us most often. Don't see yours? Reach out — Angela will get back to you personally.</p>
-      </div>
-    </section>
+    return page_hero("FAQ", "Answers, in plain language.",
+        "The questions clients ask us most often. Don't see yours? Reach out — Angela will get back to you personally.") + f'''
 
     <!-- CONFIRM before launch: attorney must approve every Maryland-law statement below. -->
     <section class="section bg-paper">
@@ -528,15 +532,8 @@ def contact_main():
     # unique matter labels in the select
     matter_opts = ["Divorce","Child Custody","Child / Spousal Support","Property Division","Adoption","Protective Order","Prenuptial Agreement","Other / Not Sure"]
     opts = "".join(f'                    <option>{m}</option>\n' for m in matter_opts)
-    return f'''
-    <section class="page-hero">
-      <div class="page-hero__watermark" aria-hidden="true">Contact</div>
-      <div class="container">
-        <p class="page-hero__crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</p>
-        <h1 class="page-hero__title">Schedule a confidential consultation.</h1>
-        <p class="lead measure">Reach out by phone, email, or the form. Angela personally reviews every inquiry and will respond within one business day.</p>
-      </div>
-    </section>
+    return page_hero("Contact", "Schedule a confidential consultation.",
+        "Reach out by phone, email, or the form. Angela personally reviews every inquiry and will respond within one business day.") + f'''
 
     <section class="section bg-paper" id="contact">
       <div class="container">
@@ -549,7 +546,11 @@ def contact_main():
             <p class="muted" style="margin-top:1.6rem; font-size:.9rem; max-width:40ch;">Prefer to talk it through? Call the office directly — Angela welcomes a confidential, no-obligation conversation.</p>
           </div>
           <div>
-            <form class="form-card" data-contact-form novalidate aria-describedby="form-disclaimer">
+            <!-- Ready for Netlify Forms out of the box (data-netlify + hidden form-name + honeypot).
+                 For Formspree/other providers, change action="/" to your endpoint URL. See CONFIRM.md. -->
+            <form class="form-card" data-contact-form action="/" method="POST" name="consultation" data-netlify="true" netlify-honeypot="bot-field" novalidate aria-describedby="form-disclaimer">
+              <input type="hidden" name="form-name" value="consultation" />
+              <p class="hp" hidden aria-hidden="true"><label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
               <div class="form-row">
                 <div class="field"><label for="name">Full Name <span class="req" aria-hidden="true">*</span></label><input id="name" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="err-name" placeholder="Jane Doe" /><span class="field__error" id="err-name" role="alert"></span></div>
                 <div class="field"><label for="phone">Phone <span class="req" aria-hidden="true">*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" required aria-required="true" aria-describedby="err-phone" placeholder="(410) 555-0100" /><span class="field__error" id="err-phone" role="alert"></span></div>
@@ -566,6 +567,28 @@ def contact_main():
               <p class="form-disclaimer" id="form-disclaimer">By submitting, you acknowledge that no attorney&ndash;client relationship is formed until a written engagement is signed. Information shared here will be treated confidentially.</p>
             </form>
           </div>
+        </div>
+      </div>
+    </section>'''
+
+def faq_jsonld(faqs):
+    def clean(a):
+        t = re.sub(r"<[^>]+>", " ", a)
+        t = htmlmod.unescape(t)
+        return re.sub(r"\s+", " ", t).strip()
+    data = {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": htmlmod.unescape(q),
+                            "acceptedAnswer": {"@type": "Answer", "text": clean(a)}} for q, a in faqs]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + '</script>'
+
+def notfound_main():
+    return page_hero("Not Found", "This page could not be found.",
+        "The page you're looking for may have moved or no longer exists. Use the links below, or head back to the homepage.") + '''
+    <section class="section bg-paper">
+      <div class="container" style="text-align:center;">
+        <div class="hero__cta" style="justify-content:center;" data-reveal>
+          <a class="btn btn--solid" href="index.html"><span class="btn__label">Back to home</span><span class="btn__arrow">&rarr;</span></a>
+          <a class="btn btn--ghost" href="contact.html"><span class="btn__label">Contact the firm</span></a>
         </div>
       </div>
     </section>'''
@@ -588,16 +611,40 @@ PAGES = {
                  "testimonials.html", testimonials_main(), True),
   "faq.html": ("Family Law FAQ | Law Office of Angela Furman, LLC",
                  "Answers to common Maryland family law questions about divorce timelines, custody, support, protective orders, fees, and confidentiality.",
-                 "faq.html", faq_main(), True),
+                 "faq.html", faq_main(), True, faq_jsonld(FAQS)),
   "contact.html": ("Contact | Law Office of Angela Furman, LLC",
                  "Schedule a confidential family law consultation in Columbia, MD. Call (410) 635-4910, email, or send a message.",
                  "contact.html", contact_main(), False),
 }
 
-for fname, (title, desc, active, main_html, with_cta) in PAGES.items():
-    html = page(active, title, desc, main_html, with_cta)
+for fname, vals in PAGES.items():
+    title, desc, active, main_html, with_cta = vals[:5]
+    extra_head = vals[5] if len(vals) > 5 else ""
+    html = page(active, title, desc, main_html, with_cta, extra_head=extra_head)
     with open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     print("wrote", fname, len(html), "bytes")
+
+# 404 page
+nf = page("404.html", "Page Not Found | Law Office of Angela Furman, LLC",
+          "Sorry — the page you were looking for could not be found.", notfound_main(), with_cta=False)
+with open(os.path.join(OUT, "404.html"), "w", encoding="utf-8") as f:
+    f.write(nf)
+print("wrote 404.html", len(nf), "bytes")
+
+# robots.txt + sitemap.xml
+with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
+    f.write("User-agent: *\nAllow: /\n\nSitemap: " + BASE_URL + "/sitemap.xml\n")
+
+sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+for fname in PAGES:
+    loc = BASE_URL + "/" + ("" if fname == "index.html" else fname)
+    pri = "1.0" if fname == "index.html" else "0.7"
+    sitemap.append(f"  <url><loc>{loc}</loc><changefreq>monthly</changefreq><priority>{pri}</priority></url>")
+sitemap.append("</urlset>\n")
+with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f:
+    f.write("\n".join(sitemap))
+print("wrote robots.txt + sitemap.xml")
 
 print("done")

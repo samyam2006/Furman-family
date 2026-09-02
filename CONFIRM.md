@@ -38,20 +38,30 @@ production domain.
       illustration standing in for a real photo. Swap it for a licensed B&W office/
       architectural photograph when available (update the `.hero__bg` background URL).
 
-## Contact form (make it real)
-- [ ] The form is a **clearly-labeled non-production stub** — it does not send anything.
-      Wire it to an approved secure endpoint or form provider (see the submit handler in
-      `assets/js/main.js`). Requirements: HTTPS, server-side validation, spam protection,
-      encrypted transport, least-privilege storage, documented retention/deletion.
-- [ ] Provide firm-approved **success copy** and the desired recipient / response process.
+## Contact form (make it live)
+The form is now **wired for real submission** and works two ways:
+- **Netlify Forms** (default): it already has `data-netlify`, a hidden `form-name`, and a
+  honeypot. Deploy the site to Netlify and submissions arrive automatically — no code needed.
+- **Formspree / other**: change the form's `action="/"` to your endpoint URL (in
+  `build.py` `contact_main`, then regenerate) — the JS posts to whatever `action` you set.
+- [ ] Pick the provider and confirm the **recipient inbox** + response process.
+- [ ] On any host that is **not** Netlify and has no endpoint set, the form shows a
+      "please call/email" message instead of sending — confirm that's acceptable, or set an endpoint.
+- [ ] Requirements to satisfy with the provider: HTTPS, spam protection, encrypted transport,
+      least-privilege storage, documented retention/deletion, and a **privacy policy** link.
 - [ ] Never send the `message` field to analytics, ad pixels, heatmaps, or session replay.
-- [ ] Add a **privacy policy** link if personal data is collected.
 
 ## SEO / production readiness
-- [ ] Set the **canonical URL** and Open Graph `og:url` / `og:image` once the production
-      domain + SSL are verified (placeholders are commented out in `<head>`).
-- [ ] Replace the inline SVG **favicon** with a real firm favicon; add `robots.txt` / sitemap.
-- [ ] Enable the **LegalService structured data** block (commented in `<head>`) only after
-      the firm confirms name, address, phone, hours, and service area. No invented
-      ratings, prices, specialties, or awards.
-- [ ] No preview-only artifacts (e.g. "Made with Emergent" badge) are present — keep it that way.
+- [ ] **Set the production domain.** Everything points at `https://alfurmanlaw.com` via the
+      `BASE_URL` constant in `build.py` (canonical, `og:url`, sitemap, robots). Change it to the
+      real domain and regenerate before launch.
+- [x] Canonical, Open Graph, Twitter tags, and a branded 1200×630 **OG image**
+      (`assets/img/og.png`) are in place. — verify the domain resolves.
+- [x] `robots.txt` + `sitemap.xml` generated.
+- [x] **LegalService** structured data on every page and **FAQPage** schema on the FAQ page.
+      Verify the business name, address, phone, and service area are correct — no ratings,
+      prices, specialties, or awards are asserted.
+- [x] Fonts are **self-hosted** (`assets/fonts/`) — no third-party font requests.
+- [ ] Replace the inline SVG **favicon** with a real firm favicon/logo when available.
+- [x] Custom **404 page**, **print stylesheet**, and reduced-motion support are in place.
+- [x] No preview-only artifacts (e.g. "Made with Emergent" badge) are present.

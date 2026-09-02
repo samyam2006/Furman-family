@@ -194,6 +194,18 @@
       var el = document.getElementById(id);
       if (el) el.addEventListener("input", function () { if (el.closest(".field").classList.contains("invalid")) validate(); });
     });
+    var submitBtn = form.querySelector('button[type="submit"]');
+    function btnLabel(text) { var l = submitBtn && submitBtn.querySelector(".btn__label"); if (l) l.textContent = text; }
+    function reenable() { if (submitBtn) { submitBtn.removeAttribute("disabled"); btnLabel("Request Consultation"); } }
+    var reachLine = " please call <a class=\"link\" href=\"tel:+14106354910\">(410) 635-4910</a> or email <a class=\"link\" href=\"mailto:angela.furman@alfurmanlaw.com\">angela.furman@alfurmanlaw.com</a>.";
+    function showSuccess() {
+      if (status) { status.hidden = false; status.className = "form-status success"; status.textContent = "Thank you — your message has been sent. Angela reviews every inquiry personally and will be in touch."; }
+      form.querySelectorAll("input, textarea, select, button").forEach(function (el) { el.setAttribute("disabled", "disabled"); });
+    }
+    function showReach(msg) {
+      if (status) { status.hidden = false; status.className = "form-status success"; status.innerHTML = msg + reachLine; }
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (status) { status.hidden = true; status.className = "form-status"; }
@@ -203,14 +215,21 @@
         if (firstInvalid) firstInvalid.focus();
         return;
       }
-      /* NON-PRODUCTION STUB — nothing is sent. Replace with a call to an approved
-         secure endpoint / form provider before launch. Never log the message field
-         to analytics, console, or session-replay tools. */
-      if (status) {
-        status.hidden = false;
-        status.className = "form-status success";
-        status.innerHTML = "Thanks — your details look complete. This demo form isn't connected to a secure inbox yet, so to reach the firm now please call <a class=\"link\" href=\"tel:+14106354910\">(410) 635-4910</a> or email <a class=\"link\" href=\"mailto:angela.furman@alfurmanlaw.com\">angela.furman@alfurmanlaw.com</a>.";
+
+      var action = form.getAttribute("action");
+      // No live endpoint configured (form kept as a demo): show a clear notice, send nothing.
+      if (!action || action === "#" || action === "") {
+        showReach("Thanks — your details look complete. This form isn't connected to a live inbox yet, so to reach the firm now");
+        return;
       }
+
+      // Real submission — works with Netlify Forms (action="/") or any provider
+      // (Formspree, etc.) whose endpoint you set as the form's action.
+      if (submitBtn) { submitBtn.setAttribute("disabled", "disabled"); btnLabel("Sending…"); }
+      var body = new URLSearchParams(new FormData(form)).toString();
+      fetch(action, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded" }, body: body })
+        .then(function (r) { if (r.ok) { showSuccess(); } else { reenable(); showReach("Your message is ready. To make sure it reaches Angela right away,"); } })
+        .catch(function () { reenable(); showReach("Your message is ready. To make sure it reaches Angela right away,"); });
     });
   }
 
