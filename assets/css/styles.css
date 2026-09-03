@@ -152,13 +152,15 @@ body {
 .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; padding-block: .35rem; }
 .topbar .tb-left { font-size: .82rem; letter-spacing: .02em; color: var(--dark-soft); }
 .topbar .tb-right { display: flex; align-items: center; gap: 1.6rem; font-size: .84rem; }
-.topbar .tb-right a { display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; letter-spacing: .02em; }
+.topbar .tb-right a { display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
 .topbar .tb-right a:hover { opacity: .8; }
-.topbar .tb-sep { width: 1px; height: 16px; background: rgba(255,255,255,.25); }
-.topbar .tb-hours { color: var(--dark-soft); }
-@media (max-width: 720px){
+.topbar .tb-sep { width: 1px; height: 16px; background: rgba(255,255,255,.25); flex: none; }
+.topbar .tb-hours { color: var(--dark-soft); white-space: nowrap; }
+@media (max-width: 880px){
   .topbar .tb-left { display: none; }
   .topbar .container { justify-content: center; }
+}
+@media (max-width: 560px){
   .topbar .tb-hours, .topbar .tb-sep { display: none; }
 }
 
@@ -551,9 +553,10 @@ h1, h2, h3, .page-hero__title, .h-hero, .cta-band__title, .quote { text-wrap: ba
    ========================================================================== */
 
 /* ---------- Brand logo ---------- */
-.brand { display: inline-flex; align-items: center; gap: .75rem; }
-.brand__logo { width: 48px; height: 48px; flex: none; object-fit: contain; }
-.brand__text { display: inline-flex; flex-direction: column; line-height: 1.05; }
+.brand { display: inline-flex; flex-direction: row; align-items: center; gap: .7rem; }
+.brand__logo { width: 46px; height: 46px; flex: none; object-fit: contain; }
+.brand__text { display: inline-flex; flex-direction: column; line-height: 1.1; }
+.footer-brand .brand { flex-direction: column; align-items: flex-start; gap: 0; }
 .is-scrolled .brand__logo { width: 42px; height: 42px; transition: width .4s var(--ease), height .4s var(--ease); }
 @media (max-width: 560px){ .brand__sub { display: none; } .brand__logo { width: 40px; height: 40px; } .brand__name { font-size: 1.02rem; } }
 
