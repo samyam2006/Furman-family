@@ -18,7 +18,9 @@ built to the project PRD.
 
 ## Design
 - **Black & white on a white ground** — white/warm-off-white backgrounds, near-black
-  text (`#14140f`), gray secondary. No color accents; strictly monochrome.
+  text (`#14140f`), gray secondary — with **restrained brand accents drawn from the logo**:
+  navy (`#1f2d44`, dark bands + drop caps) and antique gold (`#b08d57`, hairlines, the
+  overline tick, active nav underline, quote marks). Body copy stays black on white.
 - Typography: **Libre Baskerville** (classic serif — wordmark, headings) + **Source
   Sans 3** (UI/body) for a traditional, credible law-firm feel.
 - **Traditional firm structure** (inspired by conventional family-law sites): a slim

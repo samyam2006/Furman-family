@@ -148,6 +148,7 @@ def footer():
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
+          <img class="footer-logo" src="assets/img/logo-mark-light.png" alt="" width="54" height="54" />
           <span class="brand__name display">Law Office of Angela Furman, LLC</span>
           <p>A boutique family law practice serving Columbia, Maryland and the surrounding area &mdash; built on relationships, not volume.</p>
         </div>
@@ -276,7 +277,7 @@ def acc_html(faqs):
 
 def portrait(ar="ar-portrait", label="Attorney portrait — real photo pending", parallax=False):
     p = ' data-parallax' if parallax else ''
-    return f'''<div class="figure photo-slot {ar}"{p}>
+    return f'''<div class="figure photo-slot {ar}" data-mask{p}>
               <div class="photo-slot__mono" aria-hidden="true">AF</div>
               <span class="photo-slot__label">{label}</span>
             </div>'''
@@ -490,7 +491,7 @@ def about_main():
             <h2 class="h-xl display" id="about-heading" style="margin-top:1.1rem;">Angela Furman, Esq.</h2>
             <p class="role" style="font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:.6rem;">Founding Attorney &middot; Licensed in Maryland</p>
             <div class="stack" style="margin-top:1.8rem; color:var(--ink-2);">
-              <p>Angela Furman founded her practice on the belief that every client deserves direct access to their attorney. With a reputation built almost entirely on referrals, she brings a level of personal attention and professional integrity that larger firms simply cannot offer.</p>
+              <p class="dropcap">Angela Furman founded her practice on the belief that every client deserves direct access to their attorney. With a reputation built almost entirely on referrals, she brings a level of personal attention and professional integrity that larger firms simply cannot offer.</p>
               <p>Family law touches the most important parts of a person's life — their children, their home, their future. Angela approaches every case with the discretion, preparation, and steady guidance her clients need during difficult moments.</p>
               <p>Whether you're navigating a divorce, formalizing custody, or planning ahead with a prenuptial agreement, you will work directly with Angela — never handed off, never rushed.</p>
             </div>

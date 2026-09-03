@@ -75,7 +75,7 @@
   else { requestAnimationFrame(function () { requestAnimationFrame(function () { lineEls.forEach(function (el) { el.classList.add("in"); }); }); }); }
 
   /* -------------------------------------------------- Scroll reveal + staggered groups */
-  var revealEls = [].slice.call(document.querySelectorAll("[data-reveal], [data-stagger]"));
+  var revealEls = [].slice.call(document.querySelectorAll("[data-reveal], [data-stagger], [data-mask]"));
   if (reduceMotion || !hasIO) {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   } else {
