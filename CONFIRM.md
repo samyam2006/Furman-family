@@ -1,5 +1,28 @@
 # Launch-blocker checklist — confirm before going live
 
+## ⚠️ Highest priority — DMV / multi-state service
+- [ ] **Confirm licensure before advertising service in D.C. and Virginia.** The home page
+      now has an "Areas We Serve" section and the schema lists Washington, D.C. and Northern
+      Virginia. Our copy states Angela is **licensed in Maryland**. Practicing (or advertising
+      that you practice) in D.C./VA generally requires admission to those bars or a proper
+      co-counsel/pro hac vice arrangement. If Angela is **not** admitted in D.C./VA, either
+      remove those jurisdictions from the "Areas We Serve" section (in `build.py` → `home_main`)
+      and from `areaServed` in `SITE_JSONLD`, or reword to reflect referral/co-counsel. A note
+      to that effect is already shown under the section — have counsel approve or revise it.
+
+## Recently added (verify)
+- [x] Real **logo + favicon set** generated from `assets/angela.png` (header mark
+      `assets/img/logo-mark.png`, `favicon.ico`, PNG icons, apple-touch, `site.webmanifest`).
+- [x] **Privacy Policy** and **Disclaimer** pages — *drafts for attorney review*; confirm they
+      match the firm's actual practices, provider(s), and law, and update the "Last updated" date.
+- [x] **Insights** scaffold (footer-linked) with one sample post; replace/expand with real articles.
+- [x] **Consultation checklist** page + downloadable `assets/consultation-checklist.pdf`
+      (regenerate the PDF if you edit the checklist).
+- [x] **View Transitions** + `netlify.toml` security headers / CSP. If you use a form provider
+      other than Netlify/Formspree, add it to the CSP `connect-src`/`form-action` in `netlify.toml`.
+
+---
+
 This site was built to the PRD ("Black-and-White Family Law Website Rebuild").
 All copy comes from the audited source and is treated as **pending attorney
 approval**, not independently verified. Every item below is marked in the HTML

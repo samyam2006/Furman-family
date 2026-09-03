@@ -21,14 +21,16 @@ SITE_JSONLD = ('<script type="application/ld+json">'
     '"description":"Boutique family law practice in Columbia, Maryland — divorce, custody, support, and family matters.",'
     f'"url":"{BASE_URL}/","image":"{BASE_URL}/assets/img/og.png",'
     '"telephone":"+1-410-635-4910","email":"angela.furman@alfurmanlaw.com",'
-    '"areaServed":["Columbia, MD","Howard County, MD"],'
+    '"areaServed":["Columbia, MD","Howard County, MD","Montgomery County, MD","Anne Arundel County, MD","Baltimore, MD","Washington, DC","Northern Virginia"],'
     '"address":{"@type":"PostalAddress","streetAddress":"8850 Columbia 100 Pkwy, Suite 303",'
     '"addressLocality":"Columbia","addressRegion":"MD","postalCode":"21045","addressCountry":"US"}}'
     '</script>')
 
-FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
-           "%3Crect width='32' height='32' fill='%23ffffff'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' "
-           "font-weight='700' font-size='22' fill='%2314140f' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E\" />")
+FAVICON = ('<link rel="icon" href="favicon.ico" sizes="any" />\n'
+           '  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />\n'
+           '  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />\n'
+           '  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />\n'
+           '  <link rel="manifest" href="site.webmanifest" />')
 
 NAV = [
     ("Home", "index.html"),
@@ -98,8 +100,11 @@ def header(active):
   <header class="site-header">
     <div class="container">
       <a class="brand" href="index.html" aria-label="Law Office of Angela Furman, LLC — home">
-        <span class="brand__name">Law Office of Angela Furman</span>
-        <span class="brand__sub">Family Law &middot; Columbia, Maryland</span>
+        <img class="brand__logo" src="assets/img/logo-mark.png" alt="" width="54" height="54" />
+        <span class="brand__text">
+          <span class="brand__name">Law Office of Angela Furman</span>
+          <span class="brand__sub">Family Law &middot; Columbia, Maryland</span>
+        </span>
       </a>
       <nav class="nav" aria-label="Primary">
         <ul class="nav__links">
@@ -164,6 +169,15 @@ def footer():
             <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
             <li>8850 Columbia 100 Pkwy, Suite 303<br>Columbia, MD 21045</li>
             <li>Mon&ndash;Fri &middot; Until 5:00 PM &middot; By appointment</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="consultation-checklist.html">Consultation Checklist</a></li>
+            <li><a href="insights.html">Insights</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
           </ul>
         </div>
       </div>
@@ -350,6 +364,41 @@ def home_main():
           <div class="stat"><div class="stat__num"><span data-count="24">0</span><span class="suf">h</span></div><div class="stat__label">Typical response to a new inquiry</div></div>
           <div class="stat"><div class="stat__num"><span data-count="100">0</span><span class="suf">%</span></div><div class="stat__label">Confidential consultations, every time</div></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== AREAS WE SERVE (DMV) ===== -->
+    <section class="section serve bg-dark" aria-labelledby="serve-h">
+      <div class="serve__rings" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="container">
+        <div class="sec-head" data-reveal>
+          <p class="overline"><span class="tick"></span> Areas We Serve</p>
+          <h2 class="h-xl display" id="serve-h" style="margin-top:1.1rem;">Family law counsel across the DMV.</h2>
+          <p class="lead measure">From our home base in Columbia, we help families throughout Maryland, Washington, D.C., and Northern Virginia &mdash; the greater DMV region.</p>
+        </div>
+        <div class="serve__cols" data-stagger>
+          <div class="serve__col">
+            <h3 class="serve__region">Maryland</h3>
+            <ul class="serve__list">
+              <li>Columbia</li><li>Howard County</li><li>Ellicott City</li><li>Clarksville</li><li>Fulton</li><li>Elkridge</li><li>Laurel</li><li>Montgomery County</li><li>Silver Spring</li><li>Bethesda</li><li>Rockville</li><li>Prince George&rsquo;s County</li><li>Anne Arundel County</li><li>Annapolis</li><li>Baltimore</li>
+            </ul>
+          </div>
+          <div class="serve__col">
+            <h3 class="serve__region">Washington, D.C.</h3>
+            <ul class="serve__list">
+              <li>Northwest</li><li>Capitol Hill</li><li>Georgetown</li><li>Downtown</li><li>The District, citywide</li>
+            </ul>
+          </div>
+          <div class="serve__col">
+            <h3 class="serve__region">Northern Virginia</h3>
+            <ul class="serve__list">
+              <li>Arlington</li><li>Alexandria</li><li>Fairfax</li><li>Falls Church</li><li>McLean</li><li>Reston</li><li>Vienna</li><li>Tysons</li>
+            </ul>
+          </div>
+        </div>
+        <!-- CONFIRM: representation in D.C. and Virginia requires the appropriate bar admission.
+             Confirm Angela's licensure (or co-counsel arrangements) before advertising service there. -->
+        <p class="serve__note" data-reveal>Angela is licensed in Maryland. Matters in D.C. and Virginia are handled in accordance with each jurisdiction&rsquo;s rules; contact us to confirm we can assist with your specific matter.</p>
       </div>
     </section>
 
@@ -593,6 +642,183 @@ def notfound_main():
       </div>
     </section>'''
 
+# ---------------- LEGAL: PRIVACY ----------------
+def privacy_main():
+    return page_hero("Privacy Policy", "Privacy Policy",
+        "How the Law Office of Angela Furman, LLC handles the information you share with us.") + '''
+    <section class="section bg-paper">
+      <div class="container">
+        <!-- CONFIRM: this is a review-ready template. Have counsel confirm it matches the firm's
+             actual data practices, analytics/form provider, and applicable law before publishing. -->
+        <article class="prose" data-reveal>
+          <p class="prose__meta">Last updated: September 2026 &middot; <em>Draft for attorney review</em></p>
+          <p>This Privacy Policy explains what information the Law Office of Angela Furman, LLC (&ldquo;the firm,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) collects through this website, how we use it, and the choices you have. Using this website means you agree to this policy.</p>
+
+          <h2>Information we collect</h2>
+          <p>We collect information you choose to provide &mdash; for example, when you complete our contact form or email or call us. This may include your name, phone number, email address, the practice area you select, and any details you write in your message.</p>
+          <p>Like most websites, our host may automatically log basic technical information such as your IP address, browser type, and the pages you visit. We do not use this to identify you personally.</p>
+
+          <h2>How we use your information</h2>
+          <ul>
+            <li>To respond to your inquiry and evaluate whether we can assist you.</li>
+            <li>To communicate with you about a potential or existing matter.</li>
+            <li>To operate, maintain, and improve this website.</li>
+            <li>To comply with legal and professional obligations.</li>
+          </ul>
+
+          <h2>What the contact form is &mdash; and isn&rsquo;t</h2>
+          <p>Submitting the contact form or emailing the firm does <strong>not</strong> create an attorney&ndash;client relationship, and information you send before we agree to represent you may not be treated as confidential in the way client communications are. Please do not send sensitive details &mdash; Social Security numbers, financial account numbers, passwords, or information about imminent danger &mdash; through this website.</p>
+
+          <h2>Cookies &amp; analytics</h2>
+          <p>This website is intentionally lightweight. If we add analytics or other tools in the future, we will update this policy and, where required, ask for your consent. <em>[CONFIRM: name any analytics/marketing tools actually used.]</em></p>
+
+          <h2>Sharing &amp; third parties</h2>
+          <p>We do not sell your information. We may share it with trusted service providers who help us operate the website or the contact form (for example, a form or email provider), only as needed and subject to appropriate safeguards, or where required by law.</p>
+
+          <h2>Data retention &amp; security</h2>
+          <p>We keep inquiry information only as long as needed for the purposes above or as required by law, and we take reasonable measures to protect it. No method of transmission over the internet is completely secure.</p>
+
+          <h2>Your choices</h2>
+          <p>You may ask us what information we hold about you, ask us to correct or delete it, or opt out of further contact, by writing to the address or email below. <em>[CONFIRM: add any state-specific privacy rights that apply.]</em></p>
+
+          <h2>Children</h2>
+          <p>This website is intended for adults and is not directed to children under 13.</p>
+
+          <h2>Changes to this policy</h2>
+          <p>We may update this policy from time to time. The &ldquo;last updated&rdquo; date above shows when it last changed.</p>
+
+          <h2>Contact us</h2>
+          <p>Questions about this policy? Contact the Law Office of Angela Furman, LLC at
+             <a class="link" href="tel:+14106354910">(410) 635-4910</a> or
+             <a class="link" href="mailto:angela.furman@alfurmanlaw.com">angela.furman@alfurmanlaw.com</a>,
+             8850 Columbia 100 Pkwy, Suite 303, Columbia, MD 21045.</p>
+        </article>
+      </div>
+    </section>'''
+
+# ---------------- LEGAL: DISCLAIMER ----------------
+def disclaimer_main():
+    return page_hero("Disclaimer", "Legal Disclaimer",
+        "Important information about the use of this website.") + '''
+    <section class="section bg-paper">
+      <div class="container">
+        <!-- CONFIRM: review-ready template — confirm wording with counsel before publishing. -->
+        <article class="prose" data-reveal>
+          <p class="prose__meta">Last updated: September 2026 &middot; <em>Draft for attorney review</em></p>
+
+          <h2>Attorney advertising</h2>
+          <p>This website may be considered attorney advertising in some jurisdictions. Prior results do not guarantee a similar outcome.</p>
+
+          <h2>No legal advice</h2>
+          <p>The information on this website is provided for general informational purposes only and is not legal advice. Family law is fact-specific and varies by jurisdiction. You should not act, or refrain from acting, based on anything on this website without seeking advice from a qualified attorney about your particular situation.</p>
+
+          <h2>No attorney&ndash;client relationship</h2>
+          <p>Viewing this website, contacting the firm, or submitting the contact form does not create an attorney&ndash;client relationship. That relationship is formed only when the firm and a client sign a written engagement agreement.</p>
+
+          <h2>Confidentiality</h2>
+          <p>Please do not send confidential or time-sensitive information to the firm until an attorney&ndash;client relationship has been established in writing. Unsolicited information may not be treated as privileged or confidential.</p>
+
+          <h2>Jurisdiction</h2>
+          <p>Angela Furman is licensed to practice law in the State of Maryland. Descriptions of services relate to Maryland family law unless otherwise noted. Matters arising in other jurisdictions are handled in accordance with those jurisdictions&rsquo; rules and may involve local counsel. <em>[CONFIRM licensure and any additional bar admissions.]</em></p>
+
+          <h2>Third-party links</h2>
+          <p>Any links to third-party websites are provided for convenience only; the firm is not responsible for their content.</p>
+
+          <h2>Emergencies</h2>
+          <p>This website and its contact form are not monitored continuously and are not an emergency service. <strong>If you or your children are in immediate danger, call 911.</strong></p>
+
+          <h2>Contact</h2>
+          <p>Law Office of Angela Furman, LLC &middot;
+             <a class="link" href="tel:+14106354910">(410) 635-4910</a> &middot;
+             <a class="link" href="mailto:angela.furman@alfurmanlaw.com">angela.furman@alfurmanlaw.com</a></p>
+        </article>
+      </div>
+    </section>'''
+
+# ---------------- INSIGHTS (footer-linked scaffold) ----------------
+def insights_main():
+    return page_hero("Insights", "Insights &amp; family law notes.",
+        "Plain-language notes on Maryland family law. General information only — not legal advice for your situation.") + '''
+    <section class="section bg-paper">
+      <div class="container">
+        <div class="insight-grid" data-stagger>
+          <a class="insight-card" href="insights-first-consultation.html">
+            <span class="insight-card__tag">Getting Started</span>
+            <h2 class="insight-card__title">What to expect at your first family law consultation</h2>
+            <p class="insight-card__excerpt">What happens in that first conversation, what to bring, and how to make the most of it.</p>
+            <span class="link">Read note <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </a>
+          <div class="insight-card is-soon" aria-disabled="true">
+            <span class="insight-card__tag">Divorce</span>
+            <h2 class="insight-card__title">Understanding Maryland&rsquo;s divorce timeline</h2>
+            <p class="insight-card__excerpt">A closer look at the stages of an uncontested and contested divorce.</p>
+            <span class="insight-card__soon">Coming soon</span>
+          </div>
+          <div class="insight-card is-soon" aria-disabled="true">
+            <span class="insight-card__tag">Custody</span>
+            <h2 class="insight-card__title">How courts weigh a child&rsquo;s best interests</h2>
+            <p class="insight-card__excerpt">The factors that shape custody decisions, and how to prepare.</p>
+            <span class="insight-card__soon">Coming soon</span>
+          </div>
+        </div>
+        <p class="muted" data-reveal style="margin-top:2.4rem; font-size:.9rem;">Have a question you'd like us to cover? <a class="link" href="contact.html">Ask the firm &rarr;</a></p>
+      </div>
+    </section>'''
+
+def insights_post_main():
+    return page_hero('<a href="insights.html">Insights</a>', "What to expect at your first family law consultation",
+        "A first meeting should leave you with clarity — even if you decide not to move forward.") + '''
+    <section class="section bg-paper">
+      <div class="container">
+        <article class="prose" data-reveal>
+          <p class="prose__meta">Getting Started &middot; General information, not legal advice</p>
+          <p>The first consultation is a conversation, not a commitment. Its goal is simple: to help you understand where you stand, what your options are, and what a sensible next step looks like.</p>
+          <h2>What happens</h2>
+          <p>We&rsquo;ll ask you to walk us through your situation in your own words, then talk through the legal framework that applies, the likely path forward, and a realistic sense of timing and cost. You&rsquo;ll have room to ask anything.</p>
+          <h2>What to bring</h2>
+          <p>You don&rsquo;t need a perfect file. A short summary of your situation, key dates, and any court papers you already have are plenty to start. Our <a class="link" href="consultation-checklist.html">consultation checklist</a> walks through the details.</p>
+          <h2>What you&rsquo;ll leave with</h2>
+          <p>Clarity. Even if we&rsquo;re not the right fit, you should leave understanding your options and your next step. Consultations are confidential, whether or not you hire the firm.</p>
+          <p><a class="link" href="contact.html">Schedule a confidential consultation &rarr;</a></p>
+        </article>
+      </div>
+    </section>'''
+
+# ---------------- CONSULTATION CHECKLIST ----------------
+def checklist_groups():
+    G = [
+      ("Bring identification", ["A photo ID", "Your contact details and preferred way to be reached"]),
+      ("Key dates &amp; background", ["Date of marriage and, if applicable, date of separation", "Names and dates of birth of your children", "A short written summary of your situation and your goals"]),
+      ("Court &amp; case papers (if any)", ["Any petitions, complaints, or motions you&rsquo;ve received or filed", "Existing court orders (custody, support, protective orders)", "Any signed agreements (prenuptial, separation, parenting)"]),
+      ("Financial snapshot", ["Recent pay stubs or proof of income for both spouses, if available", "Recent tax returns", "A rough list of major assets (home, vehicles, retirement, accounts) and debts", "Monthly household expenses, roughly"]),
+      ("For matters involving children", ["Your children&rsquo;s school and activity schedules", "The current parenting/time-sharing arrangement", "Any concerns about safety or well-being"]),
+      ("Your questions", ["Write down the questions that matter most to you", "Note your priorities &mdash; what a good outcome looks like for you"]),
+    ]
+    out = ""
+    for i, (title, items) in enumerate(G, 1):
+        lis = "".join(f'<li><span class="cl-box" aria-hidden="true"></span> {it}</li>' for it in items)
+        out += f'''          <section class="cl-group">
+            <h2 class="cl-group__title"><span class="cl-num">{i:02d}</span> {title}</h2>
+            <ul class="cl-list">{lis}</ul>
+          </section>
+'''
+    return out
+
+def checklist_main():
+    return page_hero("Consultation Checklist", "Your consultation checklist.",
+        "A little preparation makes your first meeting far more productive. Bring what you can — don't worry about a perfect file.") + f'''
+    <section class="section bg-paper">
+      <div class="container">
+        <div class="cl-actions" data-reveal>
+          <a class="btn btn--solid" href="assets/consultation-checklist.pdf" download><span class="btn__label">Download PDF</span><span class="btn__arrow">&darr;</span></a>
+          <button class="btn btn--ghost" type="button" data-print><span class="btn__label">Print</span></button>
+        </div>
+        <div class="cl-sheet" data-reveal>
+{checklist_groups()}        </div>
+        <p class="muted" data-reveal style="margin-top:2rem; font-size:.9rem; max-width:60ch;">Missing something? Don&rsquo;t let it hold you back &mdash; we can gather documents together. <a class="link" href="contact.html">Schedule your consultation &rarr;</a></p>
+      </div>
+    </section>'''
+
 PAGES = {
   "index.html": ("Law Office of Angela Furman, LLC | Family Law Attorney Columbia, MD",
                  "Angela Furman is a trusted family law attorney in Columbia, MD handling divorce, child custody, support, and more. Schedule a confidential consultation today.",
@@ -615,6 +841,21 @@ PAGES = {
   "contact.html": ("Contact | Law Office of Angela Furman, LLC",
                  "Schedule a confidential family law consultation in Columbia, MD. Call (410) 635-4910, email, or send a message.",
                  "contact.html", contact_main(), False),
+  "consultation-checklist.html": ("Consultation Checklist | Law Office of Angela Furman, LLC",
+                 "A simple checklist of what to bring and prepare for your first family law consultation. Download the PDF or print it.",
+                 "consultation-checklist.html", checklist_main(), True),
+  "insights.html": ("Insights | Law Office of Angela Furman, LLC",
+                 "Plain-language notes on Maryland family law from the Law Office of Angela Furman, LLC.",
+                 "insights.html", insights_main(), True),
+  "insights-first-consultation.html": ("What to Expect at Your First Consultation | Law Office of Angela Furman, LLC",
+                 "What happens at a first family law consultation, what to bring, and what you'll leave with.",
+                 "insights-first-consultation.html", insights_post_main(), True),
+  "privacy-policy.html": ("Privacy Policy | Law Office of Angela Furman, LLC",
+                 "How the Law Office of Angela Furman, LLC handles information shared through this website.",
+                 "privacy-policy.html", privacy_main(), False),
+  "disclaimer.html": ("Disclaimer | Law Office of Angela Furman, LLC",
+                 "Legal disclaimer for the Law Office of Angela Furman, LLC website.",
+                 "disclaimer.html", disclaimer_main(), False),
 }
 
 for fname, vals in PAGES.items():
@@ -646,5 +887,54 @@ sitemap.append("</urlset>\n")
 with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f:
     f.write("\n".join(sitemap))
 print("wrote robots.txt + sitemap.xml")
+
+# web app manifest
+manifest = {
+    "name": "Law Office of Angela Furman, LLC",
+    "short_name": "Angela Furman Law",
+    "description": "Boutique family law in Columbia, Maryland.",
+    "start_url": "/",
+    "display": "browser",
+    "background_color": "#ffffff",
+    "theme_color": "#14140f",
+    "icons": [
+        {"src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png"},
+        {"src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    ],
+}
+with open(os.path.join(OUT, "site.webmanifest"), "w", encoding="utf-8") as f:
+    json.dump(manifest, f, indent=2)
+print("wrote site.webmanifest")
+
+# Netlify config: clean URLs + security headers
+with open(os.path.join(OUT, "netlify.toml"), "w", encoding="utf-8") as f:
+    f.write('''[build]
+  publish = "."
+
+# Serve pretty URLs (/about instead of /about.html)
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'self'; base-uri 'self'"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+''')
+
+with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f:
+    f.write("# Netlify pretty-URL fallbacks (optional)\n/home    /    301\n")
+print("wrote netlify.toml + _redirects")
 
 print("done")

@@ -233,6 +233,10 @@
     });
   }
 
+  /* -------------------------------------------------- Print (consultation checklist) */
+  var printBtn = document.querySelector("[data-print]");
+  if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+
   /* -------------------------------------------------- Footer year */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
