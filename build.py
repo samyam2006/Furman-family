@@ -302,8 +302,7 @@ def home_main():
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="container">
         <div class="hero--image__inner">
-          <p class="overline"><span class="tick"></span> Family Law — Columbia, Maryland</p>
-          <h1 class="h-hero display lines" style="margin-top: 1.4rem; max-width: 20ch;">
+          <h1 class="h-hero display lines" style="max-width: 20ch;">
             <span class="ln"><span>Trusted Counsel.</span></span>
             <span class="ln"><span class="serif-italic">Exceptional Representation.</span></span>
           </h1>
