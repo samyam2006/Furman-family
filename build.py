@@ -103,7 +103,6 @@ def header(active):
         <img class="brand__logo" src="assets/img/logo-mark.png" alt="" width="54" height="54" />
         <span class="brand__text">
           <span class="brand__name">Law Office of Angela Furman</span>
-          <span class="brand__sub">Family Law &middot; Columbia, Maryland</span>
         </span>
       </a>
       <nav class="nav" aria-label="Primary">
