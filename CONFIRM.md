@@ -11,6 +11,13 @@
       to that effect is already shown under the section — have counsel approve or revise it.
 
 ## Recently added (verify)
+- [ ] **Attorney photo** — upload the real headshot to `assets/img/angela-furman.jpg`.
+      It fills the About + home portrait slots (grayscale, colorizes on hover); until it
+      exists the AF monogram slot shows as a graceful fallback.
+- [ ] **LawPay button** — the Contact page "Make a Secure Payment" button points at a
+      placeholder (`#lawpay`). Set it to the firm's real LawPay payment-page URL
+      (e.g. `https://secure.lawpay.com/pages/...`), or remove the button if online
+      payment isn't live yet. LawPay + pay-over-time is also mentioned in the fees FAQ.
 - [x] Real **logo + favicon set** generated from `assets/angela.png` (header mark
       `assets/img/logo-mark.png`, `favicon.ico`, PNG icons, apple-touch, `site.webmanifest`).
 - [x] **Privacy Policy** and **Disclaimer** pages — *drafts for attorney review*; confirm they
