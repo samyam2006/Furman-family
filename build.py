@@ -26,6 +26,41 @@ SITE_JSONLD = ('<script type="application/ld+json">'
     '"addressLocality":"Columbia","addressRegion":"MD","postalCode":"21045","addressCountry":"US"}}'
     '</script>')
 
+# Attorney (Person) structured data — shown on the About page.
+ATTORNEY_JSONLD = ('<script type="application/ld+json">'
+    '{"@context":"https://schema.org","@type":"Person",'
+    '"name":"Angela Furman","honorificSuffix":"Esq.","jobTitle":"Founding Attorney",'
+    f'"url":"{BASE_URL}/about.html","image":"{BASE_URL}/assets/img/angela-furman.jpg",'
+    '"worksFor":{"@type":"LegalService","name":"Law Office of Angela Furman, LLC","url":"' + BASE_URL + '/"},'
+    '"areaServed":"Columbia, Maryland",'
+    '"knowsAbout":["Divorce","Child Custody","Child Support","Spousal Support","Property Division","Adoption","Protective Orders","Prenuptial Agreements"],'
+    '"address":{"@type":"PostalAddress","streetAddress":"8850 Columbia 100 Pkwy, Suite 303",'
+    '"addressLocality":"Columbia","addressRegion":"MD","postalCode":"21045","addressCountry":"US"}}'
+    '</script>')
+
+# Human-readable names for breadcrumbs (drives BreadcrumbList schema on interior pages).
+CRUMBS = {
+    "practice-areas.html": "Practice Areas", "about.html": "About", "process.html": "Process",
+    "testimonials.html": "Testimonials", "faq.html": "FAQ", "contact.html": "Contact",
+    "consultation-checklist.html": "Consultation Checklist", "insights.html": "Insights",
+    "insights-first-consultation.html": "What to Expect at Your First Consultation",
+    "privacy-policy.html": "Privacy Policy", "disclaimer.html": "Disclaimer",
+}
+
+def breadcrumb_jsonld(slug):
+    name = CRUMBS.get(slug)
+    if not name:
+        return ""
+    items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL + "/"}]
+    if slug == "insights-first-consultation.html":
+        items.append({"@type": "ListItem", "position": 2, "name": "Insights", "item": BASE_URL + "/insights.html"})
+        items.append({"@type": "ListItem", "position": 3, "name": name, "item": BASE_URL + "/" + slug})
+    else:
+        items.append({"@type": "ListItem", "position": 2, "name": name, "item": BASE_URL + "/" + slug})
+    import json as _json
+    data = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}
+    return '<script type="application/ld+json">' + _json.dumps(data, ensure_ascii=False) + '</script>'
+
 FAVICON = ('<link rel="icon" href="favicon.ico" sizes="any" />\n'
            '  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />\n'
            '  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />\n'
@@ -203,7 +238,11 @@ def footer():
 '''
 
 def page(active, title, desc, main_html, with_cta=True, extra_head=""):
-    return (head(title, desc, slug=active, extra_head=extra_head) + header(active) + '\n  <main id="main">\n'
+    auto = breadcrumb_jsonld(active)
+    if active == "about.html":
+        auto += ATTORNEY_JSONLD
+    combined = "\n  ".join(filter(None, [auto, extra_head]))
+    return (head(title, desc, slug=active, extra_head=combined) + header(active) + '\n  <main id="main">\n'
             + main_html + ('\n' + cta_band() if with_cta else '') + '\n  </main>\n' + footer())
 
 def page_hero(crumb_label, title, lead):
@@ -446,8 +485,8 @@ def home_main():
           <h2 class="h-xl display" id="tst-t" style="margin-top:1.1rem;">In the words of the people we've represented.</h2>
         </div>
         <div class="tgrid" data-stagger>
-          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">Angela was the steady hand I needed during the hardest year of my life. She returned every call, explained every step, and fought for my children without ever losing her grace.</p><footer class="quote__cite">Rebecca M. &middot; Columbia, MD</footer></blockquote>
-          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">I came to Angela on a referral and now I refer everyone I know. She is sharp, deeply prepared, and unfailingly kind. The kind of attorney you want in your corner.</p><footer class="quote__cite">David T. &middot; Columbia, MD</footer></blockquote>
+          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">Angela was the steady hand I needed during the hardest year of my life. She returned every call, explained every step, and fought for my children without ever losing her grace.</p><footer class="quote__cite">Anonymous &middot; Columbia, MD</footer></blockquote>
+          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">I came to Angela on a referral and now I refer everyone I know. She is sharp, deeply prepared, and unfailingly kind. The kind of attorney you want in your corner.</p><footer class="quote__cite">Anonymous &middot; Columbia, MD</footer></blockquote>
         </div>
       </div>
     </section>'''
@@ -559,8 +598,8 @@ def testimonials_main():
     <section class="section bg-paper">
       <div class="container">
         <div class="tgrid" data-stagger>
-          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">Angela was the steady hand I needed during the hardest year of my life. She returned every call, explained every step, and fought for my children without ever losing her grace.</p><footer class="quote__cite">Rebecca M. &middot; Columbia, MD</footer></blockquote>
-          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">I came to Angela on a referral and now I refer everyone I know. She is sharp, deeply prepared, and unfailingly kind. The kind of attorney you want in your corner.</p><footer class="quote__cite">David T. &middot; Columbia, MD</footer></blockquote>
+          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">Angela was the steady hand I needed during the hardest year of my life. She returned every call, explained every step, and fought for my children without ever losing her grace.</p><footer class="quote__cite">Anonymous &middot; Columbia, MD</footer></blockquote>
+          <blockquote class="tcard"><span class="quote__mark" aria-hidden="true">&ldquo;</span><p class="quote">I came to Angela on a referral and now I refer everyone I know. She is sharp, deeply prepared, and unfailingly kind. The kind of attorney you want in your corner.</p><footer class="quote__cite">Anonymous &middot; Columbia, MD</footer></blockquote>
         </div>
         <p class="muted" data-reveal style="margin-top:2.4rem; font-size:.88rem; max-width:70ch;">Testimonials reflect the experience of individual clients. Every matter is different, and prior results do not guarantee a similar outcome.</p>
       </div>
