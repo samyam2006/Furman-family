@@ -627,8 +627,7 @@ def contact_main():
             <h2 class="h-md display" style="margin-top:.7rem;">Secure payments &amp; pay-over-time.</h2>
             <p class="muted" style="margin-top:.7rem; max-width:58ch;">We accept credit- and debit-card payments through <strong>LawPay</strong>, and <strong>pay-over-time</strong> plans are available &mdash; so cost is one less thing to worry about while we focus on your case.</p>
           </div>
-          <!-- CONFIRM: point href at the firm's LawPay payment-page URL (e.g. https://secure.lawpay.com/pages/...). Remove this button if online payment isn't live yet. -->
-          <a class="btn btn--solid" href="#lawpay" data-lawpay><span class="btn__label">Make a Secure Payment</span><span class="btn__arrow">&rarr;</span></a>
+          <!-- A "Make a Secure Payment" button can go here once the firm's LawPay payment-page URL is available. -->
         </div>
       </div>
     </section>'''
