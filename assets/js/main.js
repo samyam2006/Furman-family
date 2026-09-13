@@ -233,6 +233,12 @@
     });
   }
 
+  /* -------------------------------------------------- Attorney photo: fall back to the slot if missing */
+  [].slice.call(document.querySelectorAll(".portrait-photo")).forEach(function (img) {
+    img.addEventListener("error", function () { img.classList.add("is-broken"); });
+    if (img.complete && img.naturalWidth === 0) img.classList.add("is-broken");
+  });
+
   /* -------------------------------------------------- Print (consultation checklist) */
   var printBtn = document.querySelector("[data-print]");
   if (printBtn) printBtn.addEventListener("click", function () { window.print(); });

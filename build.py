@@ -260,7 +260,7 @@ FAQS = [
     ("Are consultations confidential?",
      "<p>Yes. Every consultation is confidential, whether or not you ultimately hire the firm. You can speak openly so we can give you honest, accurate guidance about your options.</p>"),
     ("How do you charge for your services?",
-     "<p>Most family law matters are billed at an hourly rate against an initial retainer, with detailed monthly invoices so you always know where things stand. We discuss fees clearly and transparently before any engagement begins.</p>"),
+     "<p>Most family law matters are billed at an hourly rate against an initial retainer, with detailed monthly invoices so you always know where things stand. We discuss fees clearly and transparently before any engagement begins.</p><p>For your convenience, we accept secure credit- and debit-card payments through <strong>LawPay</strong>, and <strong>pay-over-time</strong> options are available &mdash; ask us about a payment plan that fits your budget.</p>"),
 ]
 
 def acc_html(faqs):
@@ -274,11 +274,14 @@ def acc_html(faqs):
     out += '        </div>\n'
     return out
 
-def portrait(ar="ar-portrait", label="Attorney portrait — real photo pending", parallax=False):
+def portrait(ar="ar-portrait", label="Attorney portrait", parallax=False):
     p = ' data-parallax' if parallax else ''
+    # The <img> covers the fallback slot when present; if the file is missing,
+    # main.js removes the broken image and the AF monogram slot shows instead.
     return f'''<div class="figure photo-slot {ar}" data-mask{p}>
               <div class="photo-slot__mono" aria-hidden="true">AF</div>
-              <span class="photo-slot__label">{label}</span>
+              <span class="photo-slot__label">{label} &mdash; add assets/img/angela-furman.jpg</span>
+              <img class="portrait-photo" src="assets/img/angela-furman.jpg" alt="Angela Furman, Esq., founding attorney" loading="lazy" />
             </div>'''
 
 # ---------------- HOME ----------------
@@ -591,6 +594,7 @@ def contact_main():
             <div class="detail-row"><span class="k">Email</span><span class="v"><a class="link" href="mailto:{EMAIL}">{EMAIL}</a></span></div>
             <div class="detail-row"><span class="k">Office</span><span class="v">8850 Columbia 100 Pkwy, Suite 303<small>Columbia, MD 21045</small></span></div>
             <div class="detail-row"><span class="k">Hours</span><span class="v">Mon&ndash;Fri &middot; Until 5:00 PM<small>By appointment</small></span></div>
+            <div class="detail-row"><span class="k">Payments</span><span class="v">LawPay &amp; pay-over-time<small>Secure card payments and flexible payment plans available.</small></span></div>
             <p class="muted" style="margin-top:1.6rem; font-size:.9rem; max-width:40ch;">Prefer to talk it through? Call the office directly — Angela welcomes a confidential, no-obligation conversation.</p>
           </div>
           <div>
@@ -615,6 +619,16 @@ def contact_main():
               <p class="form-disclaimer" id="form-disclaimer">By submitting, you acknowledge that no attorney&ndash;client relationship is formed until a written engagement is signed. Information shared here will be treated confidentially.</p>
             </form>
           </div>
+        </div>
+
+        <div class="pay-note" data-reveal>
+          <div>
+            <p class="overline"><span class="tick"></span> Flexible Payments</p>
+            <h2 class="h-md display" style="margin-top:.7rem;">Secure payments &amp; pay-over-time.</h2>
+            <p class="muted" style="margin-top:.7rem; max-width:58ch;">We accept credit- and debit-card payments through <strong>LawPay</strong>, and <strong>pay-over-time</strong> plans are available &mdash; so cost is one less thing to worry about while we focus on your case.</p>
+          </div>
+          <!-- CONFIRM: point href at the firm's LawPay payment-page URL (e.g. https://secure.lawpay.com/pages/...). Remove this button if online payment isn't live yet. -->
+          <a class="btn btn--solid" href="#lawpay" data-lawpay><span class="btn__label">Make a Secure Payment</span><span class="btn__arrow">&rarr;</span></a>
         </div>
       </div>
     </section>'''
