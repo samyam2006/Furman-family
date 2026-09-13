@@ -277,11 +277,11 @@ def acc_html(faqs):
 def portrait(ar="ar-portrait", label="Attorney portrait", parallax=False):
     p = ' data-parallax' if parallax else ''
     # The <img> covers the fallback slot when present; if the file is missing,
-    # main.js removes the broken image and the AF monogram slot shows instead.
-    return f'''<div class="figure photo-slot {ar}" data-mask{p}>
+    # main.js flags it broken and the AF monogram slot shows instead.
+    return f'''<div class="figure photo-slot {ar}"{p}>
               <div class="photo-slot__mono" aria-hidden="true">AF</div>
               <span class="photo-slot__label">{label} &mdash; add assets/img/angela-furman.jpg</span>
-              <img class="portrait-photo" src="assets/img/angela-furman.jpg" alt="Angela Furman, Esq., founding attorney" loading="lazy" />
+              <img class="portrait-photo" src="assets/img/angela-furman.jpg" alt="Angela Furman, Esq., founding attorney" />
             </div>'''
 
 # ---------------- HOME ----------------
