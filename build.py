@@ -358,7 +358,7 @@ def home_main():
             <a class="btn btn--ghost" href="practice-areas.html"><span class="btn__label">View Practice Areas</span></a>
           </div>
           <div class="hero__meta" data-reveal data-delay="4">
-            <span class="m">Licensed in Maryland</span>
+            <span class="m">Licensed in Maryland &amp; D.C.</span>
             <span class="m">Referral-based practice</span>
             <span class="m">Confidential &middot; By appointment</span>
           </div>
@@ -370,7 +370,7 @@ def home_main():
     <section class="section--tight bg-paper" id="trust" aria-label="Why clients choose the firm">
       <div class="container">
         <div class="trust__row trust-band" data-stagger>
-          <div class="trust__item"><span class="mark" aria-hidden="true"></span><span class="n">Licensed in Maryland</span></div>
+          <div class="trust__item"><span class="mark" aria-hidden="true"></span><span class="n">Licensed in Maryland &amp; D.C.</span></div>
           <div class="trust__item"><span class="mark" aria-hidden="true"></span><span class="n">Personalized Attention</span></div>
           <div class="trust__item"><span class="mark" aria-hidden="true"></span><span class="n">Referral-Based Practice</span></div>
           <div class="trust__item"><span class="mark" aria-hidden="true"></span><span class="n">Confidential Consultations</span></div>
@@ -440,7 +440,7 @@ def home_main():
         </div>
         <!-- CONFIRM: representation in D.C. and Virginia requires the appropriate bar admission.
              Confirm Angela's licensure (or co-counsel arrangements) before advertising service there. -->
-        <p class="serve__note" data-reveal>Angela is licensed in Maryland. Matters in D.C. and Virginia are handled in accordance with each jurisdiction&rsquo;s rules; contact us to confirm we can assist with your specific matter.</p>
+        <p class="serve__note" data-reveal>Angela is licensed in Maryland and Washington, D.C. Matters in Virginia are handled in accordance with that jurisdiction&rsquo;s rules; contact us to confirm we can assist with your specific matter.</p>
       </div>
     </section>
 
@@ -530,14 +530,14 @@ def about_main():
           <div>
             <p class="overline"><span class="tick"></span> The Attorney</p>
             <h2 class="h-xl display" id="about-heading" style="margin-top:1.1rem;">Angela Furman, Esq.</h2>
-            <p class="role" style="font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:.6rem;">Founding Attorney &middot; Licensed in Maryland</p>
+            <p class="role" style="font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:.6rem;">Founding Attorney &middot; Licensed in Maryland &amp; D.C.</p>
             <div class="stack" style="margin-top:1.8rem; color:var(--ink-2);">
               <p class="dropcap">Angela Furman founded her practice on the belief that every client deserves direct access to their attorney. With a reputation built almost entirely on referrals, she brings a level of personal attention and professional integrity that larger firms simply cannot offer.</p>
               <p>Family law touches the most important parts of a person's life — their children, their home, their future. Angela approaches every case with the discretion, preparation, and steady guidance her clients need during difficult moments.</p>
               <p>Whether you're navigating a divorce, formalizing custody, or planning ahead with a prenuptial agreement, you will work directly with Angela — never handed off, never rushed.</p>
             </div>
             <!-- CONFIRM: credentials + licensing statement -->
-            <div class="cred-line"><div class="name">Angela Furman, Esq.</div><div class="role">Founding Attorney &middot; Licensed in Maryland</div></div>
+            <div class="cred-line"><div class="name">Angela Furman, Esq.</div><div class="role">Founding Attorney &middot; Licensed in Maryland &amp; D.C.</div></div>
           </div>
         </div>
       </div>
@@ -771,7 +771,7 @@ def disclaimer_main():
           <p>Please do not send confidential or time-sensitive information to the firm until an attorney&ndash;client relationship has been established in writing. Unsolicited information may not be treated as privileged or confidential.</p>
 
           <h2>Jurisdiction</h2>
-          <p>Angela Furman is licensed to practice law in the State of Maryland. Descriptions of services relate to Maryland family law unless otherwise noted. Matters arising in other jurisdictions are handled in accordance with those jurisdictions&rsquo; rules and may involve local counsel. <em>[CONFIRM licensure and any additional bar admissions.]</em></p>
+          <p>Angela Furman is licensed to practice law in the State of Maryland and the District of Columbia. Descriptions of services relate to Maryland and D.C. family law unless otherwise noted. Matters arising in other jurisdictions (such as Virginia) are handled in accordance with those jurisdictions&rsquo; rules and may involve local counsel.</p>
 
           <h2>Third-party links</h2>
           <p>Any links to third-party websites are provided for convenience only; the firm is not responsible for their content.</p>

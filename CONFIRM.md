@@ -1,14 +1,12 @@
 # Launch-blocker checklist — confirm before going live
 
-## ⚠️ Highest priority — DMV / multi-state service
-- [ ] **Confirm licensure before advertising service in D.C. and Virginia.** The home page
-      now has an "Areas We Serve" section and the schema lists Washington, D.C. and Northern
-      Virginia. Our copy states Angela is **licensed in Maryland**. Practicing (or advertising
-      that you practice) in D.C./VA generally requires admission to those bars or a proper
-      co-counsel/pro hac vice arrangement. If Angela is **not** admitted in D.C./VA, either
-      remove those jurisdictions from the "Areas We Serve" section (in `build.py` → `home_main`)
-      and from `areaServed` in `SITE_JSONLD`, or reword to reflect referral/co-counsel. A note
-      to that effect is already shown under the section — have counsel approve or revise it.
+## ⚠️ Multi-state service — Virginia still to confirm
+- [x] **Maryland & D.C.** — confirmed. Copy now reads "Licensed in Maryland & D.C." across the
+      hero, trust strip, About, and disclaimer.
+- [ ] **Virginia** — the "Areas We Serve" section and schema still list Northern Virginia.
+      Confirm Angela is admitted in VA (or handling via co-counsel). If not, remove the Virginia
+      column in `build.py` → `home_main` and drop "Northern Virginia" from `areaServed` in
+      `SITE_JSONLD`. The note under the section already frames VA as jurisdiction-dependent.
 
 ## Recently added (verify)
 - [ ] **Attorney photo** — upload the real headshot to `assets/img/angela-furman.jpg`.
