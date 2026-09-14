@@ -338,19 +338,20 @@ def home_main():
     marquee_items = "".join(f'<span class="marquee__item">{t}</span>' for _,t,_,_,_ in AREAS)
     marquee_items = marquee_items + marquee_items  # duplicate for seamless loop
     return f'''
-    <!-- ===== HERO ===== -->
-    <section class="hero hero--image" aria-label="Introduction">
-      <div class="hero__bg" aria-hidden="true"></div>
-      <div class="hero__scrim" aria-hidden="true"></div>
+    <!-- ===== HERO (branded lockup) ===== -->
+    <section class="hero hero--brand" aria-label="Introduction">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="serve__rings hero__rings" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       <div class="container">
-        <div class="hero--image__inner">
-          <h1 class="h-hero display lines" style="max-width: 20ch;">
-            <span class="ln"><span>Trusted Counsel.</span></span>
-            <span class="ln"><span class="serif-italic">Exceptional Representation.</span></span>
-          </h1>
-          <p class="lead" data-reveal data-delay="2" style="margin-top: 1.6rem; max-width: 56ch;">
-            A boutique family law practice in Columbia, Maryland — built on relationships, not
-            volume. Direct access to your attorney from the first call to the final signature.
+        <div class="hero--brand__inner">
+          <img class="hero-emblem" src="assets/img/logo-mark-light.png" alt="" width="120" height="120" data-reveal />
+          <p class="hero-brand__eyebrow" data-reveal data-delay="1">Law Office of</p>
+          <h1 class="hero-brand__name" data-reveal data-delay="1">Angela Furman<span class="llc">,&nbsp;LLC</span></h1>
+          <div class="hero-brand__rule" data-reveal data-delay="2" aria-hidden="true"></div>
+          <p class="hero-brand__tag" data-reveal data-delay="2">Advocacy You Can Trust.</p>
+          <p class="lead" data-reveal data-delay="3" style="margin-top: 1.4rem; max-width: 52ch;">
+            A boutique family law practice in Columbia, Maryland — direct access to your attorney
+            from the first call to the final signature.
           </p>
           <div class="hero__cta" data-reveal data-delay="3">
             <a class="btn btn--solid" href="contact.html"><span class="btn__label">Schedule a Consultation</span><span class="btn__arrow">&rarr;</span></a>
